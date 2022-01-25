@@ -1,6 +1,6 @@
 base_ = [
     '../../_base_/default_runtime.py',
-    '../../_base_/recog_datasets/seg_toy_data2.py',
+    '../../_base_/recog_datasets/my_test.py',
     '../../_base_/recog_models/seg.py',
     '../../_base_/recog_pipelines/seg_pipeline.py',
 ]
