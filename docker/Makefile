@@ -15,10 +15,12 @@ interactive:
 		--platform=linux/amd64 \
 		-it \
 		-ti --net=host --ipc=host \
-		-e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
+		-e DISPLAY=$DISPLAY \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
 		--env="QT_X11_NO_MITSHM=1" \
 		--gpus all \
 		--shm-size=8g \
+		-p 8888:8888 \
 		--rm \
 		-v ~/.aws/:/root/.aws/:ro \
 		-v /home/alireza/Devel/mmocr/data:/${IMAGE_TAG}/data/ \

@@ -26,3 +26,9 @@ ENV FORCE_CUDA="1"
 RUN pip install -r requirements.txt
 RUN pip install --no-cache-dir -e .
 RUN pip install opencv-python==4.1.2.30
+RUN pip install jupyter
+EXPOSE 5000
+RUN curl https://download.openmmlab.com/mmocr/data/wildreceipt.tar -o datasets/wildreceipt.tar 
+to do 
+put the data in the directory and go through the notebook !
+when the notebook works try to train a model
