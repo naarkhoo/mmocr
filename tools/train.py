@@ -2,11 +2,14 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import argparse
 import copy
+import multiprocessing as mp
 import os
 import os.path as osp
+import platform
 import time
 import warnings
 
+import cv2
 import mmcv
 import torch
 from mmcv import Config, DictAction
@@ -88,12 +91,25 @@ def parse_args():
     return args
 
 
+def setup_multi_processes(cfg):
+    # set multi-process start method as `fork` to speed up the training
+    if platform.system() != 'Windows':
+        mp_start_method = cfg.get('mp_start_method', 'fork')
+        mp.set_start_method(mp_start_method)
+
+    # disable opencv multithreading to avoid system being overloaded
+    opencv_num_threads = cfg.get('opencv_num_threads', 0)
+    cv2.setNumThreads(opencv_num_threads)
+
+
 def main():
     args = parse_args()
 
     cfg = Config.fromfile(args.config)
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
+
+    setup_multi_processes(cfg)
 
     # set cudnn_benchmark
     if cfg.get('cudnn_benchmark', False):
